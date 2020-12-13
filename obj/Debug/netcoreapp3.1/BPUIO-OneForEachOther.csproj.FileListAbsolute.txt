@@ -454,3 +454,9 @@ C:\Users\goranz\source\repos\BPUIO-OneForEachOther_popravakRelacije\BPUIO-OneFor
 C:\Users\goranz\source\repos\BPUIO-OneForEachOther_popravakRelacije\BPUIO-OneForEachOther\obj\Debug\netcoreapp3.1\Razor\Views\OrderDetails\Details.cshtml.g.cs
 C:\Users\goranz\source\repos\BPUIO-OneForEachOther_popravakRelacije\BPUIO-OneForEachOther\obj\Debug\netcoreapp3.1\Razor\Views\OrderDetails\Edit.cshtml.g.cs
 C:\Users\goranz\source\repos\BPUIO-OneForEachOther_popravakRelacije\BPUIO-OneForEachOther\obj\Debug\netcoreapp3.1\Razor\Views\OrderDetails\Index.cshtml.g.cs
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\EntityFramework.SqlServer.dll
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\EntityFramework.dll
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\System.CodeDom.dll
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\System.Data.SqlClient.dll
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\goranz\source\repos\BPUIO-OneForEachOther\BPUIO-OneForEachOther\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll

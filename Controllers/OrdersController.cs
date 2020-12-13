@@ -48,7 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
-            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Id");
+            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name");
             return View();
         }
 
@@ -65,7 +65,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Id", order.BoroughId);
+            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
             return View(order);
         }
 
@@ -82,7 +82,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
-            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Id", order.BoroughId);
+            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
             return View(order);
         }
 
@@ -118,7 +118,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Id", order.BoroughId);
+            ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
             return View(order);
         }
 

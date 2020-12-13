@@ -49,8 +49,8 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
-            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Id");
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id");
+            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name");
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Code");
             return View();
         }
 

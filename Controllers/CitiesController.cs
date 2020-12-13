@@ -48,7 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: Cities/Create
         public IActionResult Create()
         {
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id");
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
             return View();
         }
 
@@ -61,11 +61,13 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                city.Created = DateTime.Now;
+                city.Updated = DateTime.Now;
                 _context.Add(city);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", city.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
             return View(city);
         }
 
@@ -82,7 +84,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", city.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
             return View(city);
         }
 
@@ -102,6 +104,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    city.Updated = DateTime.Now;
                     _context.Update(city);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +121,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", city.CountryId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
             return View(city);
         }
 

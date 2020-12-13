@@ -48,7 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: UserNotifications/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName");
             return View();
         }
 

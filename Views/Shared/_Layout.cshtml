@@ -41,6 +41,27 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
                         </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Administration
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="" asp-controller="AuthenticationSchemes" asp-action="Index">Authentication schemes</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Boroughs" asp-action="Index">Boroughs</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="UserRoles" asp-action="Index">User roles</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="UserBoroughs" asp-action="Index">User boroughs</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </div>
+                        </li>
+
                     </ul>
                 </div>
             </div>
