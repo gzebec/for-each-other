@@ -58,6 +58,8 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                role.Created = DateTime.Now;
+                role.Updated = DateTime.Now;
                 _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +99,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    role.Updated = DateTime.Now;
                     _context.Update(role);
                     await _context.SaveChangesAsync();
                 }

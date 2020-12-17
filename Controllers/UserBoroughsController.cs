@@ -50,7 +50,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
             return View();
         }
 
@@ -63,12 +63,14 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                userBorough.Created = DateTime.Now;
+                userBorough.Updated = DateTime.Now;
                 _context.Add(userBorough);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
             return View(userBorough);
         }
 
@@ -86,7 +88,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
             return View(userBorough);
         }
 
@@ -106,6 +108,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    userBorough.Updated = DateTime.Now;
                     _context.Update(userBorough);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +126,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
             return View(userBorough);
         }
 

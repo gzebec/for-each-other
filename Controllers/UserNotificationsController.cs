@@ -48,7 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: UserNotifications/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
             return View();
         }
 
@@ -61,11 +61,13 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                userNotification.Created = DateTime.Now;
+                userNotification.Updated = DateTime.Now;
                 _context.Add(userNotification);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
             return View(userNotification);
         }
 
@@ -82,7 +84,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
             return View(userNotification);
         }
 
@@ -102,6 +104,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    userNotification.Updated = DateTime.Now;
                     _context.Update(userNotification);
                     await _context.SaveChangesAsync();
                 }
@@ -118,7 +121,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
             return View(userNotification);
         }
 

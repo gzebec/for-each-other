@@ -50,7 +50,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name");
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Code");
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
             return View();
         }
 
@@ -63,12 +63,14 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Created = DateTime.Now;
+                user.Updated = DateTime.Now;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Id", user.AuthenticationSchemeId);
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", user.CountryId);
+            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
             return View(user);
         }
 
@@ -85,8 +87,8 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
-            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Id", user.AuthenticationSchemeId);
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", user.CountryId);
+            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
             return View(user);
         }
 
@@ -106,6 +108,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    user.Updated = DateTime.Now;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
@@ -122,8 +125,8 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Id", user.AuthenticationSchemeId);
-            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Id", user.CountryId);
+            ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
+            ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
             return View(user);
         }
 

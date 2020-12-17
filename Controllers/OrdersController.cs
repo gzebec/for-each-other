@@ -61,6 +61,8 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                order.Created = DateTime.Now;
+                order.Updated = DateTime.Now;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -102,6 +104,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    order.Updated = DateTime.Now;
                     _context.Update(order);
                     await _context.SaveChangesAsync();
                 }

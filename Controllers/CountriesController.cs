@@ -58,6 +58,8 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                country.Created = DateTime.Now;
+                country.Updated = DateTime.Now;
                 _context.Add(country);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -97,6 +99,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    country.Updated = DateTime.Now;
                     _context.Update(country);
                     await _context.SaveChangesAsync();
                 }

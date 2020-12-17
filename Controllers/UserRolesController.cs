@@ -50,7 +50,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
             return View();
         }
 
@@ -63,12 +63,14 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                userRole.Created = DateTime.Now;
+                userRole.Updated = DateTime.Now;
                 _context.Add(userRole);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
             return View(userRole);
         }
 
@@ -86,7 +88,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
             return View(userRole);
         }
 
@@ -106,6 +108,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    userRole.Updated = DateTime.Now;
                     _context.Update(userRole);
                     await _context.SaveChangesAsync();
                 }
@@ -123,7 +126,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName" + " " + "LastName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
             return View(userRole);
         }
 
