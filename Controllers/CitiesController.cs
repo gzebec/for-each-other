@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using PagedList;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
@@ -37,6 +38,7 @@ namespace BPUIO_OneForEachOther.Controllers
             var city = await _context.Cities
                 .Include(c => c.Country)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (city == null)
             {
                 return NotFound();
@@ -49,6 +51,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -68,6 +71,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", city.Status);
             return View(city);
         }
 
@@ -85,6 +89,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", city.Status);
             return View(city);
         }
 
@@ -122,6 +127,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", city.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", city.Status);
             return View(city);
         }
 

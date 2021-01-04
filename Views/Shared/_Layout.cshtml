@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - For Each Others</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/6ee8d7006d.js" crossorigin="anonymous"></script>
 </head>
@@ -19,7 +20,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <!--div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -64,7 +65,8 @@
                         </li>
 
                     </ul>
-                </div>
+                </div-->
+                <partial name="_LoginPartial.cshtml" />
             </div>
         </nav>
     </header>

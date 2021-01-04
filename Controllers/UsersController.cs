@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
@@ -63,6 +65,7 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                user.Password = Hash(user.Password);
                 user.Created = DateTime.Now;
                 user.Updated = DateTime.Now;
                 _context.Add(user);
@@ -164,6 +167,75 @@ namespace BPUIO_OneForEachOther.Controllers
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);
+        }
+
+        // ovdje ide change password
+
+        // GET: Users/Edit/5
+        public async Task<IActionResult> ChangePassword(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+            return View(user);
+        }
+
+        // POST: Users/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangePassword(int id, string password, string passwordConfirm)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Id == id); ;
+
+            if (id != user.Id)
+            {
+                return NotFound();
+            }
+
+            if (Hash(password) != Hash(passwordConfirm))
+            {
+                return NotFound("Passwords don't match.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    user.Password = Hash(password);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UserExists(user.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(user);
+        }
+        // ovdje završava change password
+
+        public static string Hash (string password)
+        {
+            using (var sha1 = new SHA1Managed())
+            {
+                return BitConverter.ToString(sha1.ComputeHash(Encoding.UTF8.GetBytes(password))).Replace("-", "");
+            }
         }
     }
 }
