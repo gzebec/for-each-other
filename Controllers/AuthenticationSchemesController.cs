@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class AuthenticationSchemesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -46,6 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: AuthenticationSchemes/Create
         public IActionResult Create()
         {
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -62,6 +65,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", authenticationScheme.Status);
             return View(authenticationScheme);
         }
 
@@ -78,6 +82,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", authenticationScheme.Status);
             return View(authenticationScheme);
         }
 
@@ -113,6 +118,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", authenticationScheme.Status);
             return View(authenticationScheme);
         }
 

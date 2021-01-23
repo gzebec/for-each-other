@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class OrdersController : Controller
     {
         private readonly ApplicationContext _context;
@@ -36,6 +38,8 @@ namespace BPUIO_OneForEachOther.Controllers
 
             var order = await _context.Orders
                 .Include(o => o.Borough)
+                .Include(d => d.OrderDetails)
+                .Include(u => u.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (order == null)
             {
@@ -48,7 +52,9 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name");
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetOrderStatusList(), "Value", "Text");
             return View();
         }
 
@@ -63,11 +69,17 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 order.Created = DateTime.Now;
                 order.Updated = DateTime.Now;
+                order.CreatedBy = User.Identity.Name;
+                order.UpdatedBy = User.Identity.Name;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Orders", new { id = order.Id });
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", order.UserId);
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetOrderStatusList(), "Value", "Text", order.Status);
             return View(order);
         }
 
@@ -84,7 +96,9 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", order.UserId);
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetOrderStatusList(), "Value", "Text", order.Status);
             return View(order);
         }
 
@@ -105,6 +119,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     order.Updated = DateTime.Now;
+                    order.UpdatedBy = User.Identity.Name;
                     _context.Update(order);
                     await _context.SaveChangesAsync();
                 }
@@ -121,7 +136,9 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", order.UserId);
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", order.BoroughId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetOrderStatusList(), "Value", "Text", order.Status);
             return View(order);
         }
 
@@ -155,9 +172,73 @@ namespace BPUIO_OneForEachOther.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        // GET: Orders/ChangeStatus/5
+        public async Task<IActionResult> ChangeStatus(int? id, string status, string username = null)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            int? userId = null;
+            if (username != null)
+            {
+                userId = GetUserId(username);
+            }
+
+            if (!_context.OrderDetails.Any(e => e.OrderId == id))
+            {
+                return NotFound("Order must have at least one item.");
+            }
+            
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (userId != null)
+                    {
+                        order.UserId = userId;
+                    }
+
+                    order.Status = status;
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!OrderExists(order.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                //return RedirectToAction(nameof(Index));
+            }
+
+            return RedirectToAction("Details", "Orders", new { id = order.Id });
+
+            //return View(order);
+        }
+
         private bool OrderExists(int id)
         {
             return _context.Orders.Any(e => e.Id == id);
+        }
+
+        private int GetUserId(string username)
+        {
+            var order = _context.Users.FirstOrDefault(e => e.Username.ToLower() == username.ToLower());
+
+            return order.Id;
         }
     }
 }

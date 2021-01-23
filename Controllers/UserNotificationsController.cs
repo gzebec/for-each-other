@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class UserNotificationsController : Controller
     {
         private readonly ApplicationContext _context;
@@ -48,7 +50,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: UserNotifications/Create
         public IActionResult Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
             return View();
         }
 
@@ -63,11 +65,14 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 userNotification.Created = DateTime.Now;
                 userNotification.Updated = DateTime.Now;
+                userNotification.CreatedBy = User.Identity.Name;
+                userNotification.UpdatedBy = User.Identity.Name;
                 _context.Add(userNotification);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userNotification.UserId });
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userNotification.UserId);
             return View(userNotification);
         }
 
@@ -84,7 +89,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userNotification.UserId);
             return View(userNotification);
         }
 
@@ -105,6 +110,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     userNotification.Updated = DateTime.Now;
+                    userNotification.UpdatedBy = User.Identity.Name;
                     _context.Update(userNotification);
                     await _context.SaveChangesAsync();
                 }
@@ -119,9 +125,10 @@ namespace BPUIO_OneForEachOther.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userNotification.UserId });
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userNotification.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userNotification.UserId);
             return View(userNotification);
         }
 
@@ -152,7 +159,8 @@ namespace BPUIO_OneForEachOther.Controllers
             var userNotification = await _context.UserNotifications.FindAsync(id);
             _context.UserNotifications.Remove(userNotification);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Users", new { id = userNotification.UserId });
         }
 
         private bool UserNotificationExists(int id)

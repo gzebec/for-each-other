@@ -11,15 +11,17 @@
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <!--div-- class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            </div-->
+            <input type="hidden" asp-for="Lat" />
+            <input type="hidden" asp-for="Lng" />
             <div class="form-group">
                 <label asp-for="BoroughId" class="control-label"></label>
-                <select asp-for="BoroughId" class ="form-control" asp-items="ViewBag.BoroughId"></select>
+                <select asp-for="BoroughId" class="form-control" asp-items="ViewBag.BoroughId"></select>
             </div>
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
@@ -38,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" />
+                <input asp-for="Address" class="form-control" /> <a href="javascript:getLocation()"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -61,29 +63,29 @@
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Lat" class="control-label"></label>
-                <input asp-for="Lat" class="form-control" />
-                <span asp-validation-for="Lat" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Lng" class="control-label"></label>
-                <input asp-for="Lng" class="form-control" />
-                <span asp-validation-for="Lng" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GdprConsent" class="control-label"></label>
-                <input asp-for="GdprConsent" class="form-control" />
-                <span asp-validation-for="GdprConsent" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GdprConsentDate" class="control-label"></label>
-                <input asp-for="GdprConsentDate" class="form-control" />
-                <span asp-validation-for="GdprConsentDate" class="text-danger"></span>
-            </div>
+            <!--div class="form-group">
+        <label asp-for="Lat" class="control-label"></label>
+        <input asp-for="Lat" class="form-control" />
+        <span asp-validation-for="Lat" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Lng" class="control-label"></label>
+        <input asp-for="Lng" class="form-control" />
+        <span asp-validation-for="Lng" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GdprConsent" class="control-label"></label>
+        <input asp-for="GdprConsent" class="form-control" />
+        <span asp-validation-for="GdprConsent" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="GdprConsentDate" class="control-label"></label>
+        <input asp-for="GdprConsentDate" class="form-control" />
+        <span asp-validation-for="GdprConsentDate" class="text-danger"></span>
+    </div-->
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -94,9 +96,28 @@
     </div>
 </div>
 
-<!--div>
-    <a asp-action="Index">Back to List</a>
-</div-->
+<script>
+    var x = document.getElementById("demo");
+    var lat = document.getElementById("Lat");
+    var lng = document.getElementById("Lng");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    function showPosition(position) {
+        //x.innerHTML = "Latitude: " + position.coords.latitude +
+        //    "<br>Longitude: " + position.coords.longitude;
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        lat.value = latitude.toString();
+        lng.value = longitude.toString();
+
+    }
+</script>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

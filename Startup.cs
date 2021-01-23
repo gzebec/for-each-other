@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace BPUIO_OneForEachOther
 {
@@ -27,6 +28,10 @@ namespace BPUIO_OneForEachOther
             //services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddControllersWithViews();
+
+            // dodao
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+           .AddCookie();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +53,7 @@ namespace BPUIO_OneForEachOther
             app.UseRouting();
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -55,7 +61,6 @@ namespace BPUIO_OneForEachOther
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
             });
         }
     }

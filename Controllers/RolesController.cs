@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class RolesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -46,6 +48,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // GET: Roles/Create
         public IActionResult Create()
         {
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -60,10 +63,13 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 role.Created = DateTime.Now;
                 role.Updated = DateTime.Now;
+                role.CreatedBy = User.Identity.Name;
+                role.UpdatedBy = User.Identity.Name;
                 _context.Add(role);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", role.Status);
             return View(role);
         }
 
@@ -80,6 +86,7 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 return NotFound();
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", role.Status);
             return View(role);
         }
 
@@ -100,6 +107,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     role.Updated = DateTime.Now;
+                    role.UpdatedBy = User.Identity.Name;
                     _context.Update(role);
                     await _context.SaveChangesAsync();
                 }
@@ -116,6 +124,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", role.Status);
             return View(role);
         }
 

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<BPUIO_OneForEachOther.Models.Country>
 
 @{
-    ViewData["Title"] = "Countries";
+    ViewData["Title"] = "Index";
 }
 
 <h1>Countries</h1>
@@ -46,7 +46,7 @@
                     @Html.DisplayFor(modelItem => item.Language)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.IconUrl)
+                    <img src="@Html.DisplayFor(modelItem => item.IconUrl)" width="60px" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)

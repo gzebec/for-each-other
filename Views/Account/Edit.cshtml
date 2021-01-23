@@ -1,0 +1,101 @@
+﻿@model BPUIO_OneForEachOther.Models.User
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit profile</h1>
+
+<h4>User: @Model.FirstName @Model.LastName (@Model.Username)</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="hidden" asp-for="Username" class="form-control" />
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="Password" class="form-control" />
+                <input type="hidden" asp-for="Lat" class="form-control" />
+                <input type="hidden" asp-for="Lng" class="form-control" />
+            </div>
+            <div class="row">
+                <div class="col">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CountryId" class="control-label"></label>
+                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
+                <span asp-validation-for="CountryId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuthenticationSchemeId" class="control-label"></label>
+                <select asp-for="AuthenticationSchemeId" class="form-control" asp-items="ViewBag.AuthenticationSchemeId"></select>
+                <span asp-validation-for="AuthenticationSchemeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Status" class="control-label"></label>
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a class="btn btn-outline-info" asp-action="Profile" asp-route-id="@Model.Username">Cancel</a>
+            </div>
+        </form>
+
+        <button class="btn btn-outline-primary" onclick="getLocation()">Get curent location</button>
+    </div>
+</div>
+
+<script>
+    var x = document.getElementById("demo");
+    var lat = document.getElementById("Lat");
+    var lng = document.getElementById("Lng");
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.watchPosition(showPosition);
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+    function showPosition(position) {
+        //x.innerHTML = "Latitude: " + position.coords.latitude +
+        //    "<br>Longitude: " + position.coords.longitude;
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        lat.value = latitude.toString();
+        lng.value = longitude.toString();
+
+    }
+</script>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

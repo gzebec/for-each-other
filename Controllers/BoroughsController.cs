@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class BoroughsController : Controller
     {
         private readonly ApplicationContext _context;
@@ -49,6 +51,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name");
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -61,11 +64,16 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             if (ModelState.IsValid)
             {
+                borough.Created = DateTime.Now;
+                borough.Updated = DateTime.Now;
+                borough.CreatedBy = User.Identity.Name;
+                borough.UpdatedBy = User.Identity.Name;
                 _context.Add(borough);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", borough.CityId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", borough.Status);
             return View(borough);
         }
 
@@ -83,6 +91,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", borough.CityId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", borough.Status);
             return View(borough);
         }
 
@@ -102,6 +111,8 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 try
                 {
+                    borough.Updated = DateTime.Now;
+                    borough.UpdatedBy = User.Identity.Name;
                     _context.Update(borough);
                     await _context.SaveChangesAsync();
                 }
@@ -119,6 +130,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["CityId"] = new SelectList(_context.Cities, "Id", "Name", borough.CityId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", borough.Status);
             return View(borough);
         }
 

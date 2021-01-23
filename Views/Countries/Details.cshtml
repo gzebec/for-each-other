@@ -32,7 +32,7 @@
             @Html.DisplayNameFor(model => model.IconUrl)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IconUrl)
+            <img src="@Html.DisplayFor(model => model.IconUrl)" width="60px" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Status)
@@ -43,6 +43,6 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
     <a class="btn btn-outline-info" asp-action="Index">Back</a>
 </div>

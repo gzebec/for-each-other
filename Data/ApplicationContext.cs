@@ -1,6 +1,7 @@
 ﻿using BPUIO_OneForEachOther.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 
 namespace BPUIO_OneForEachOther.Data
 {
@@ -24,6 +25,11 @@ namespace BPUIO_OneForEachOther.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
+            {
+                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
+
             modelBuilder.Entity<AuthenticationScheme>().ToTable("cv_authentication_schemes");
             modelBuilder.Entity<Country>().ToTable("cv_countries");
             modelBuilder.Entity<City>().ToTable("cv_cities");

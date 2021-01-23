@@ -1,15 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "WCuxaNtG5MVmvAClD+z6f4kvaasEpmXbQmSY+QJL0J8NIBHp5zxdumj45JrQpnmDBn1RAlcX4DRkR5hjDoWigw==",
+  "dgSpecHash": "H0xQ+5hmmlt7Bxph9JmbG7TVW9xjtxhIpbOQwwrLj8Epjot9ULQCLoKG0AhWCBEwZ352g8o8hsXyxxeKMfxOHQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\goranz\\source\\repos\\BPUIO-OneForEachOther\\BPUIO-OneForEachOther\\BPUIO-OneForEachOther.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\goranz\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\3.1.10\\microsoft.aspnetcore.cryptography.internal.3.1.10.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\3.1.10\\microsoft.aspnetcore.cryptography.keyderivation.3.1.10.nupkg.sha512",
+    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.7\\microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
+    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnet.razor\\3.2.7\\microsoft.aspnet.razor.3.2.7.nupkg.sha512",
+    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnet.webpages\\3.2.7\\microsoft.aspnet.webpages.3.2.7.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\3.1.10\\microsoft.aspnetcore.identity.entityframeworkcore.3.1.10.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.identity.ui\\3.1.10\\microsoft.aspnetcore.identity.ui.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\3.1.0\\microsoft.aspnetcore.razor.language.3.1.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.aspnetcore.razor.runtime\\2.2.0\\microsoft.aspnetcore.razor.runtime.2.2.0.nupkg.sha512",
@@ -42,10 +41,6 @@
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.dependencyinjection\\3.1.10\\microsoft.extensions.dependencyinjection.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\3.1.10\\microsoft.extensions.dependencyinjection.abstractions.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.dependencymodel\\3.1.6\\microsoft.extensions.dependencymodel.3.1.6.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.fileproviders.abstractions\\3.1.10\\microsoft.extensions.fileproviders.abstractions.3.1.10.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.fileproviders.embedded\\3.1.10\\microsoft.extensions.fileproviders.embedded.3.1.10.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.identity.core\\3.1.10\\microsoft.extensions.identity.core.3.1.10.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.identity.stores\\3.1.10\\microsoft.extensions.identity.stores.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.logging\\3.1.10\\microsoft.extensions.logging.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\3.1.10\\microsoft.extensions.logging.abstractions.3.1.10.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.extensions.options\\3.1.10\\microsoft.extensions.options.3.1.10.nupkg.sha512",
@@ -66,14 +61,13 @@
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.templating\\3.1.4\\microsoft.visualstudio.web.codegeneration.templating.3.1.4.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration.utils\\3.1.4\\microsoft.visualstudio.web.codegeneration.utils.3.1.4.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.visualstudio.web.codegenerators.mvc\\3.1.4\\microsoft.visualstudio.web.codegenerators.mvc.3.1.4.nupkg.sha512",
+    "C:\\Users\\goranz\\.nuget\\packages\\microsoft.web.infrastructure\\1.0.0\\microsoft.web.infrastructure.1.0.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\netstandard.library\\1.6.1\\netstandard.library.1.6.1.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\newtonsoft.json\\12.0.2\\newtonsoft.json.12.0.2.nupkg.sha512",
+    "C:\\Users\\goranz\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\nuget.frameworks\\4.7.0\\nuget.frameworks.4.7.0.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\pagedlist\\1.17.0\\pagedlist.1.17.0.nupkg.sha512",
-    "C:\\Users\\goranz\\.nuget\\packages\\pagedlist.mvc\\4.5.0\\pagedlist.mvc.4.5.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.debian.8-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.23-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
     "C:\\Users\\goranz\\.nuget\\packages\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl\\4.3.0\\runtime.fedora.24-x64.runtime.native.system.security.cryptography.openssl.4.3.0.nupkg.sha512",
@@ -195,8 +189,8 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'PagedList 1.17.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "PagedList",
+      "message": "Package 'Microsoft.AspNet.Mvc 5.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Mvc",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
       ]
@@ -205,8 +199,28 @@
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "Package 'PagedList.Mvc 4.5.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
-      "libraryId": "PagedList.Mvc",
+      "message": "Package 'Microsoft.AspNet.Razor 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.Razor",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.AspNet.WebPages 3.2.7' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.AspNet.WebPages",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    },
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'Microsoft.Web.Infrastructure 1.0.0' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "Microsoft.Web.Infrastructure",
       "targetGraphs": [
         ".NETCoreApp,Version=v3.1"
       ]

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class OrderDetailsController : Controller
     {
         private readonly ApplicationContext _context;
@@ -46,9 +48,9 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: OrderDetails/Create
-        public IActionResult Create()
+        public IActionResult Create(int? orderId)
         {
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id");
+            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderId);
             return View();
         }
 
@@ -57,17 +59,22 @@ namespace BPUIO_OneForEachOther.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderId,Item,Quantity,Status,Created,CreatedBy,Updated,UpdatedBy")] OrderDetail orderDetail)
+        public async Task<IActionResult> Create(int orderId, [Bind("Id,OrderId,Item,Quantity,Status,Created,CreatedBy,Updated,UpdatedBy")] OrderDetail orderDetail)
         {
             if (ModelState.IsValid)
             {
+                orderDetail.OrderId = orderId;
                 orderDetail.Created = DateTime.Now;
                 orderDetail.Updated = DateTime.Now;
+                orderDetail.CreatedBy = User.Identity.Name;
+                orderDetail.UpdatedBy = User.Identity.Name;
                 _context.Add(orderDetail);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Orders", new { id = orderDetail.OrderId });
             }
-            ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
+            //ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
             return View(orderDetail);
         }
 
@@ -105,6 +112,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     orderDetail.Updated = DateTime.Now;
+                    orderDetail.UpdatedBy = User.Identity.Name;
                     _context.Update(orderDetail);
                     await _context.SaveChangesAsync();
                 }
@@ -119,7 +127,8 @@ namespace BPUIO_OneForEachOther.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Orders", new { id = orderDetail.OrderId });
             }
             ViewData["OrderId"] = new SelectList(_context.Orders, "Id", "Id", orderDetail.OrderId);
             return View(orderDetail);
@@ -152,7 +161,8 @@ namespace BPUIO_OneForEachOther.Controllers
             var orderDetail = await _context.OrderDetails.FindAsync(id);
             _context.OrderDetails.Remove(orderDetail);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Orders", new { id = orderDetail.OrderId });
         }
 
         private bool OrderDetailExists(int id)

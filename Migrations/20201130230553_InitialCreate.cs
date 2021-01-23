@@ -13,12 +13,12 @@ namespace BPUIO_OneForEachOther.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -31,15 +31,15 @@ namespace BPUIO_OneForEachOther.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Code = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Language = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Language = table.Column<string>(nullable: false),
                     IconUrl = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -52,13 +52,13 @@ namespace BPUIO_OneForEachOther.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    Description = table.Column<string>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,13 +72,13 @@ namespace BPUIO_OneForEachOther.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CountryId = table.Column<int>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -99,22 +99,22 @@ namespace BPUIO_OneForEachOther.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CountryId = table.Column<int>(nullable: false),
                     AuthenticationSchemeId = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
+                    Username = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
                     Address = table.Column<string>(nullable: true),
                     Phone = table.Column<string>(nullable: true),
-                    Lat = table.Column<decimal>(nullable: false),
-                    Lng = table.Column<decimal>(nullable: false),
+                    Lat = table.Column<string>(nullable: true),
+                    Lng = table.Column<string>(nullable: true),
                     GdprConsent = table.Column<string>(nullable: true),
-                    GdprConsentDate = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
+                    GdprConsentDate = table.Column<DateTime>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -140,13 +140,13 @@ namespace BPUIO_OneForEachOther.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityId = table.Column<int>(nullable: false),
-                    Code = table.Column<string>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -166,13 +166,13 @@ namespace BPUIO_OneForEachOther.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
-                    Subject = table.Column<string>(nullable: true),
-                    Text = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Subject = table.Column<string>(nullable: false),
+                    Text = table.Column<string>(nullable: false),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -193,12 +193,11 @@ namespace BPUIO_OneForEachOther.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     RoleId = table.Column<int>(nullable: false),
                     UserId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -214,7 +213,8 @@ namespace BPUIO_OneForEachOther.Migrations
                         column: x => x.UserId,
                         principalTable: "cv_users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.NoAction,
+                        onUpdate: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -223,25 +223,25 @@ namespace BPUIO_OneForEachOther.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
+                    UserId = table.Column<int>(nullable: true),
                     BoroughId = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
+                    FirstName = table.Column<string>(nullable: false),
+                    LastName = table.Column<string>(nullable: false),
                     Email = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
+                    Address = table.Column<string>(nullable: false),
                     Phone = table.Column<string>(nullable: true),
                     DeliveryDate = table.Column<DateTime>(nullable: false),
                     PaymentType = table.Column<string>(nullable: true),
                     Note = table.Column<string>(nullable: true),
-                    Lat = table.Column<decimal>(nullable: false),
-                    Lng = table.Column<decimal>(nullable: false),
+                    Lat = table.Column<string>(nullable: true),
+                    Lng = table.Column<string>(nullable: true),
                     GdprConsent = table.Column<string>(nullable: true),
-                    GdprConsentDate = table.Column<DateTime>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
+                    GdprConsentDate = table.Column<DateTime>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -262,11 +262,11 @@ namespace BPUIO_OneForEachOther.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(nullable: false),
                     BoroughId = table.Column<int>(nullable: false),
-                    Status = table.Column<string>(nullable: true),
+                    Status = table.Column<string>(nullable: false),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,13 +292,13 @@ namespace BPUIO_OneForEachOther.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<int>(nullable: false),
-                    Item = table.Column<string>(nullable: true),
+                    Item = table.Column<string>(nullable: false),
                     Quantity = table.Column<decimal>(nullable: false),
                     Status = table.Column<string>(nullable: true),
                     Created = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(nullable: true),
+                    CreatedBy = table.Column<string>(nullable: false),
                     Updated = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(nullable: true)
+                    UpdatedBy = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

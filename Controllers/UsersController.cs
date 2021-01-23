@@ -9,9 +9,11 @@ using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
 using System.Security.Cryptography;
 using System.Text;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class UsersController : Controller
     {
         private readonly ApplicationContext _context;
@@ -39,6 +41,9 @@ namespace BPUIO_OneForEachOther.Controllers
             var user = await _context.Users
                 .Include(u => u.AuthenticationScheme)
                 .Include(u => u.Country)
+                .Include(r => r.UserRoles).ThenInclude(r => r.Role)
+                .Include(r => r.UserBoroughs).ThenInclude(r => r.Borough)
+                .Include(r => r.UserNotifications)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (user == null)
             {
@@ -53,6 +58,7 @@ namespace BPUIO_OneForEachOther.Controllers
         {
             ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name");
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name");
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -68,12 +74,15 @@ namespace BPUIO_OneForEachOther.Controllers
                 user.Password = Hash(user.Password);
                 user.Created = DateTime.Now;
                 user.Updated = DateTime.Now;
+                user.CreatedBy = User.Identity.Name;
+                user.UpdatedBy = User.Identity.Name;
                 _context.Add(user);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", user.Status);
             return View(user);
         }
 
@@ -92,6 +101,7 @@ namespace BPUIO_OneForEachOther.Controllers
             }
             ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", user.Status);
             return View(user);
         }
 
@@ -112,17 +122,20 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     user.Updated = DateTime.Now;
+                    user.UpdatedBy = User.Identity.Name;
                     _context.Update(user);
                     await _context.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (DbUpdateConcurrencyException ex)
                 {
                     if (!UserExists(user.Id))
                     {
+                        ModelState.AddModelError("", "Not Found");
                         return NotFound();
                     }
                     else
                     {
+                        ModelState.AddModelError("", "Error");
                         throw;
                     }
                 }
@@ -130,6 +143,7 @@ namespace BPUIO_OneForEachOther.Controllers
             }
             ViewData["AuthenticationSchemeId"] = new SelectList(_context.AuthenticationSchemes, "Id", "Name", user.AuthenticationSchemeId);
             ViewData["CountryId"] = new SelectList(_context.Countries, "Id", "Name", user.CountryId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", user.Status);
             return View(user);
         }
 
@@ -211,6 +225,8 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     user.Password = Hash(password);
+                    user.Updated = DateTime.Now;
+                    user.UpdatedBy = User.Identity.Name;
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

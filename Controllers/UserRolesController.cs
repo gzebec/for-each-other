@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class UserRolesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -47,10 +49,11 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: UserRoles/Create
-        public IActionResult Create()
+        public IActionResult Create(int? userId)
         {
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -65,12 +68,16 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 userRole.Created = DateTime.Now;
                 userRole.Updated = DateTime.Now;
+                userRole.CreatedBy = User.Identity.Name;
+                userRole.UpdatedBy = User.Identity.Name;
                 _context.Add(userRole);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userRole.UserId });
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userRole.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userRole.Status);
             return View(userRole);
         }
 
@@ -88,7 +95,8 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userRole.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userRole.Status);
             return View(userRole);
         }
 
@@ -109,6 +117,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     userRole.Updated = DateTime.Now;
+                    userRole.UpdatedBy = User.Identity.Name;
                     _context.Update(userRole);
                     await _context.SaveChangesAsync();
                 }
@@ -123,10 +132,12 @@ namespace BPUIO_OneForEachOther.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userRole.UserId });
             }
             ViewData["RoleId"] = new SelectList(_context.Roles, "Id", "Name", userRole.RoleId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userRole.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userRole.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userRole.Status);
             return View(userRole);
         }
 
@@ -158,7 +169,8 @@ namespace BPUIO_OneForEachOther.Controllers
             var userRole = await _context.UserRoles.FindAsync(id);
             _context.UserRoles.Remove(userRole);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Users", new { id = userRole.UserId });
         }
 
         private bool UserRoleExists(int id)

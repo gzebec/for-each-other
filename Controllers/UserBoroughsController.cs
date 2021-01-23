@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class UserBoroughsController : Controller
     {
         private readonly ApplicationContext _context;
@@ -50,7 +52,8 @@ namespace BPUIO_OneForEachOther.Controllers
         public IActionResult Create()
         {
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
 
@@ -65,12 +68,16 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 userBorough.Created = DateTime.Now;
                 userBorough.Updated = DateTime.Now;
+                userBorough.CreatedBy = User.Identity.Name;
+                userBorough.UpdatedBy = User.Identity.Name;
                 _context.Add(userBorough);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userBorough.UserId });
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userBorough.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userBorough.Status);
             return View(userBorough);
         }
 
@@ -88,7 +95,8 @@ namespace BPUIO_OneForEachOther.Controllers
                 return NotFound();
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userBorough.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userBorough.Status);
             return View(userBorough);
         }
 
@@ -109,6 +117,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     userBorough.Updated = DateTime.Now;
+                    userBorough.UpdatedBy = User.Identity.Name;
                     _context.Update(userBorough);
                     await _context.SaveChangesAsync();
                 }
@@ -123,10 +132,12 @@ namespace BPUIO_OneForEachOther.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Users", new { id = userBorough.UserId });
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", userBorough.UserId);
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userBorough.UserId);
+            ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userBorough.Status);
             return View(userBorough);
         }
 
@@ -158,7 +169,8 @@ namespace BPUIO_OneForEachOther.Controllers
             var userBorough = await _context.UserBoroughs.FindAsync(id);
             _context.UserBoroughs.Remove(userBorough);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            //return RedirectToAction(nameof(Index));
+            return RedirectToAction("Details", "Users", new { id = userBorough.UserId });
         }
 
         private bool UserBoroughExists(int id)

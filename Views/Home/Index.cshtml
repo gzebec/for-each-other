@@ -2,36 +2,78 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="jumbotron">
+<div class="jumbotron" style="margin-bottom: 1rem;">
     <h1>For Each Others</h1>
+    <p>
+        <b></b>For Each Others</b> is a sample application that
+        demonstrates how to use Entity Framework Core in an
+        ASP.NET Core MVC web application.
+    </p>
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Account" asp-action="Register">Register &raquo;</a>
+        <a class="btn btn-lg btn-primary" asp-area="" asp-controller="Account" asp-action="Login">Login &raquo;</a>
+    }
 </div>
-<div class="row">
-    <div>
-        <h2>Welcome to For Each Other</h2>
-        <p>
-            <b></b>For Each Others</b> is a sample application that
-            demonstrates how to use Entity Framework Core in an
-            ASP.NET Core MVC web application.
-        </p>
+
+<div class="pb-3">
+    <div class="row">
+        <div class="col col-md-6">
+            <a asp-area="" asp-controller="Orders" asp-action="Create" style="text-decoration:none;">
+                <div class="container p-3 bg-danger border" style="border-radius: 10px; color: white; text-align: center;">
+                    <h1>Need help</h1>
+                    <p>Create an order</p>
+                </div>
+            </a>
+        </div>
+
+        <div class="col col-md-6">
+            <a asp-area="" asp-controller="Orders" asp-action="Index" style="text-decoration:none;">
+                <div class="container p-3 bg-warning text-white" style="border-radius: 10px; color: white; text-align: center;">
+                    <h1>Offer help</h1>
+                    <p>Login or register</p>
+                </div>
+            </a>
+        </div>
     </div>
-    <!--div class="col-md-4">
-        <h2>Not a member?</h2>
-        <p>You can register by pressing the following button.</p>
-        <p><a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Create">Register &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Already a member?</h2>
-        <p>You can sign in with the following button.</p>
-        <p><a class="btn btn-primary" asp-area="" asp-controller="Users" asp-action="Index">Sign in &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Build it from scratch</h2>
-        <p>You can build the application by following the steps in a series of tutorials.</p>
-        <p><a class="btn btn-default" href="https://docs.asp.net/en/latest/data/ef-mvc/intro.html">See the tutorial &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Download it</h2>
-        <p>You can download the completed project from GitHub.</p>
-        <p><a class="btn btn-default" href="https://github.com/dotnet/AspNetCore.Docs/tree/master/aspnetcore/data/ef-mvc/intro/samples/5cu-final">See project source code &raquo;</a></p>
-    </div-->
 </div>
+
+<div class="pb-3">
+    <div id="dvMap" style="height: 400px"></div>
+</div>
+
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDbVZ7m9HYe3a6wsFPfAPOUQ-lSXrNS0FQ"></script>
+    <script type="text/javascript">
+    console.log(1);
+    var markers = @Html.Raw(ViewBag.Locations);
+    console.log(2);
+    console.log(markers);
+    console.log(3);
+    window.onload = function () {
+        var mapOptions = {
+            center: new google.maps.LatLng(markers[0].lat, markers[0].lng),
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var infoWindow = new google.maps.InfoWindow();
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        for (i = 0; i < markers.length; i++) {
+            var data = markers[i]
+            //console.log(data.icon);
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: data.title,
+                icon: data.icon
+            });
+            (function (marker, data) {
+                google.maps.event.addListener(marker, "click", function (e) {
+                    infoWindow.setContent(data.description);
+                    infoWindow.open(map, marker);
+                });
+            })(marker, data);
+        }
+    }
+    </script>
+

@@ -7,10 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BPUIO_OneForEachOther.Data;
 using BPUIO_OneForEachOther.Models;
-using PagedList;
+using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
+    [CustomAuthorize]
     public class CitiesController : Controller
     {
         private readonly ApplicationContext _context;
@@ -66,6 +67,8 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 city.Created = DateTime.Now;
                 city.Updated = DateTime.Now;
+                city.CreatedBy = User.Identity.Name;
+                city.UpdatedBy = User.Identity.Name;
                 _context.Add(city);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -110,6 +113,7 @@ namespace BPUIO_OneForEachOther.Controllers
                 try
                 {
                     city.Updated = DateTime.Now;
+                    city.UpdatedBy = User.Identity.Name;
                     _context.Update(city);
                     await _context.SaveChangesAsync();
                 }

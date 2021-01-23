@@ -6,8 +6,14 @@
     <title>@ViewData["Title"] - For Each Others</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
     <script src="https://kit.fontawesome.com/6ee8d7006d.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -20,7 +26,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!--div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -28,45 +34,71 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Boroughs" asp-action="Index">Boroughs</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Boroughs" asp-action="Index">Boroughs</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Orders" asp-action="Index">Orders</a>
+                            </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Administration
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="AuthenticationSchemes" asp-action="Index">Authentication schemes</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="Boroughs" asp-action="Index">Boroughs</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="UserRoles" asp-action="Index">User roles</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="UserBoroughs" asp-action="Index">User boroughs</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Logout</a>
-                            </div>
-                        </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Administration
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" asp-area="" asp-controller="AuthenticationSchemes" asp-action="Index">Authentication schemes</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">Roles</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Countries" asp-action="Index">Countries</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Cities" asp-action="Index">Cities</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Boroughs" asp-action="Index">Boroughs</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="UserRoles" asp-action="Index">User roles</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="UserBoroughs" asp-action="Index">User boroughs</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Logout</a>
+                                </div>
+                            </li>
+                        }
 
-                    </ul>
-                </div-->
-                <partial name="_LoginPartial.cshtml" />
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item dropdown float-right">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Hello @User.Identity.Name
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Profile" asp-route-id="@User.Identity.Name">Profile</a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="~/Account/Logout">Logout</a>
+                                    </div>
+                                </li>
+
+                            }
+                            else
+                            {
+                                <!--li class="nav-item float-right">
+                                    <a class="nav-link text-dark" href="~/Account/Login">Login</a>
+                                </!--li>
+                                <li class="nav-item float-right">
+                                    <a class="nav-link text-dark" href="~/Account/Register">Register</a>
+                                </li-->
+                            }
+                        </ul>
+
+                </div>
             </div>
         </nav>
     </header>

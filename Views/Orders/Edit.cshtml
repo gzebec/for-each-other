@@ -6,18 +6,18 @@
 
 <h1>Edit</h1>
 
-<h4>Order</h4>
+<h4>Order @Model.Id</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
+            <!--div class="form-group">
                 <label asp-for="UserId" class="control-label"></label>
                 <input asp-for="UserId" class="form-control" />
                 <span asp-validation-for="UserId" class="text-danger"></span>
-            </div>
+            </div-->
             <div class="form-group">
                 <label asp-for="BoroughId" class="control-label"></label>
                 <select asp-for="BoroughId" class="form-control" asp-items="ViewBag.BoroughId"></select>
@@ -63,7 +63,7 @@
                 <input asp-for="Note" class="form-control" />
                 <span asp-validation-for="Note" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <!--div class="form-group">
                 <label asp-for="Lat" class="control-label"></label>
                 <input asp-for="Lat" class="form-control" />
                 <span asp-validation-for="Lat" class="text-danger"></span>
@@ -78,35 +78,15 @@
                 <input asp-for="GdprConsent" class="form-control" />
                 <span asp-validation-for="GdprConsent" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div-- class="form-group">
                 <label asp-for="GdprConsentDate" class="control-label"></label>
                 <input asp-for="GdprConsentDate" class="form-control" />
                 <span asp-validation-for="GdprConsentDate" class="text-danger"></span>
-            </div>
+            </div-->
             <div class="form-group">
                 <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
+                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
                 <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CreatedBy" class="control-label"></label>
-                <input asp-for="CreatedBy" class="form-control" />
-                <span asp-validation-for="CreatedBy" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Updated" class="control-label"></label>
-                <input asp-for="Updated" class="form-control" />
-                <span asp-validation-for="Updated" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UpdatedBy" class="control-label"></label>
-                <input asp-for="UpdatedBy" class="form-control" />
-                <span asp-validation-for="UpdatedBy" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
@@ -115,10 +95,6 @@
         </form>
     </div>
 </div>
-
-<!-->div>
-    <a asp-action="Index">Back to List</a>
-</!--div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

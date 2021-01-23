@@ -4,34 +4,22 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Orders</h1>
 
 <p>
-    <a class="btn btn-primary" asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Create</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                @Html.DisplayNameFor(model => model.Id)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Borough)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FirstName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.LastName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                @Html.DisplayNameFor(model => model.FirstName) @Html.DisplayNameFor(model => model.LastName)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.DeliveryDate)
@@ -43,18 +31,6 @@
                 @Html.DisplayNameFor(model => model.Note)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Lat)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Lng)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GdprConsent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.GdprConsentDate)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Status)
             </th>
             <th>Actions</th>
@@ -64,24 +40,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.UserId)
+                @Html.DisplayFor(modelItem => item.Id)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Borough.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.LastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
+                @Html.DisplayFor(modelItem => item.FirstName) @Html.DisplayFor(modelItem => item.LastName) <br />
+                @Html.DisplayFor(modelItem => item.Address) <br />
+                @Html.DisplayFor(modelItem => item.Email) <br />
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
@@ -92,18 +59,6 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Note)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lat)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Lng)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GdprConsent)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.GdprConsentDate)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Status)
