@@ -67,7 +67,7 @@ namespace BPUIO_OneForEachOther.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
 
         // GET: Users/Create
@@ -277,7 +277,7 @@ namespace BPUIO_OneForEachOther.Controllers
             return _context.Users.Any(e => e.Id == id);
         }
 
-        private User GetUserByUsername(string username)
+        public User GetUserByUsername(string username)
         {
             if (username == null)
             {

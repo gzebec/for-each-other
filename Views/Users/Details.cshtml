@@ -4,7 +4,18 @@
     ViewData["Title"] = "Details";
 }
 
-<h1>User: @Html.DisplayFor(model => model.Username)</h1>
+<h1>
+    @Html.DisplayFor(model => model.FullName)
+
+    <div class="float-right">
+        @if (User.Identity.Name == Model.Username)
+        {
+            <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        }
+        <a class="btn btn btn-outline-info" asp-action="Index">Back to List</a>
+    </div>
+
+</h1>
 
 <div>
     <hr />
@@ -68,17 +79,27 @@
 
         <div class="col-md-6">
             <div class="container">
-                <h2>Roles <span class="float-right"> <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Create" asp-route-orderId="@Model.Id">Add</a></span></h2>
+                <h2>Roles <span class="float-right"> <a class="btn btn-primary" asp-controller="UserRoles" asp-action="Create" asp-route-userId="@Model.Id">Add</a></span></h2>
                 <hr />
                 <div>
 
                     @foreach (var item in Model.UserRoles)
                     {
-                        <span>
-                            <a type="button" class="btn btn-info" asp-controller="UserRoles" asp-action="Edit" asp-route-id="@item.Id">
+                    <span>
+                        @if (item.Status == "Active")
+                        {
+                            <a type="button" class="btn btn-info mb-2" asp-controller="UserRoles" asp-action="Edit" asp-route-id="@item.Id">
                                 @Html.DisplayFor(modelItem => item.Role.Name)
                             </a>
-                        </span>
+                        }
+                        else
+                        {
+                            <a type="button" class="btn btn-secondary mb-2" asp-controller="UserRoles" asp-action="Edit" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Role.Name)
+                            </a>
+                        }
+
+                    </span>
                     }
 
                 </div>
@@ -87,17 +108,28 @@
             <hr />
 
             <div class="container">
-                <h2>Boroughs <span class="float-right"><a class="btn btn-primary" asp-controller="UserBoroughs" asp-action="Create" asp-route-orderId="@Model.Id">Add</a></span></h2>
+                <h2>Boroughs <span class="float-right"><a class="btn btn-primary" asp-controller="UserBoroughs" asp-action="Create" asp-route-userId="@Model.Id">Add</a></span></h2>
                 <hr />
                 <div>
 
                     @foreach (var item in Model.UserBoroughs)
                     {
-                        <span>
-                            <a type="button" class="btn btn-info" asp-controller="UserBoroughs" asp-action="Edit" asp-route-id="@item.Id">
-                                @Html.DisplayFor(modelItem => item.Borough.Name)
-                            </a>
-                        </span>
+                        @if (item.Status == "Active")
+                        {
+                            <span>
+                                <a type="button" class="btn btn-info mb-2" asp-controller="UserBoroughs" asp-action="Edit" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Borough.Name)
+                                </a>
+                            </span>
+                        }
+                        else
+                        {
+                            <span>
+                                <a type="button" class="btn btn-secondary mb-2" asp-controller="UserBoroughs" asp-action="Edit" asp-route-id="@item.Id">
+                                    @Html.DisplayFor(modelItem => item.Borough.Name)
+                                </a>
+                            </span>
+                        }
                     }
 
                 </div>
@@ -113,9 +145,8 @@
                     @foreach (var item in Model.UserNotifications)
                     {
                         <span>
-                            <a type="button" class="btn btn-info" asp-controller="UserNotifications" asp-action="Details" asp-route-id="@item.Id">
+                            <a type="button" class="btn btn-info mb-2" asp-controller="UserNotifications" asp-action="Details" asp-route-id="@item.Id">
                                 @Html.DisplayFor(modelItem => item.Subject)
-                                @Html.DisplayFor(modelItem => item.Text)
                             </a>
                         </span>
                     }
@@ -125,11 +156,4 @@
         </div>
 
 </dl>
-</div>
-<div>
-    @if (User.Identity.Name == Model.Username)
-    {
-        <a class="btn btn-primary" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
-    }
-    <a class="btn btn-outline-info" asp-action="Index">Back</a>
 </div>

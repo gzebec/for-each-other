@@ -61,12 +61,34 @@
                 @Html.DisplayFor(modelItem => item.Note)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Status)
+                @if (item.Status == "Worksheet")
+                {
+                    <span class="badge bg-info">@Html.DisplayFor(modelItem => item.Status)</span>
+                }
+                else if (item.Status == "In progress")
+                {
+                    <span class="badge bg-warning">@Html.DisplayFor(modelItem => item.Status)</span>
+                }
+                else if (item.Status == "Finished")
+                {
+                    <span class="badge bg-success">@Html.DisplayFor(modelItem => item.Status)</span>
+                }
+                else if (item.Status == "Canceled")
+                {
+                    <span class="badge bg-secondary">@Html.DisplayFor(modelItem => item.Status)</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.Status)
+                }
             </td>
             <td>
-                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                <!--a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id">Edit</a-->
                 <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @if (item.Status == "Worksheet")
+                {
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                }
             </td>
         </tr>
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BPUIO_OneForEachOther.Models
 {
@@ -48,6 +49,8 @@ namespace BPUIO_OneForEachOther.Models
         public DateTime Updated { get; set; }
         [StringLength(50)]
         public string UpdatedBy { get; set; }
+        [NotMapped]
+        public string StatusColor { get; set; }
 
         public ICollection<OrderDetail> OrderDetails { get; set; }
 

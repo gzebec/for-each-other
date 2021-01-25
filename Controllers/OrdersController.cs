@@ -11,7 +11,7 @@ using BPUIO_OneForEachOther.Authorize;
 
 namespace BPUIO_OneForEachOther.Controllers
 {
-    [CustomAuthorize]
+    //[CustomAuthorize]
     public class OrdersController : Controller
     {
         private readonly ApplicationContext _context;
@@ -22,6 +22,7 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: Orders
+        [CustomAuthorize]
         public async Task<IActionResult> Index()
         {
             var applicationContext = _context.Orders.Include(o => o.Borough);
@@ -29,6 +30,7 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: Orders/Details/5
+        [CustomAuthorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -69,10 +71,12 @@ namespace BPUIO_OneForEachOther.Controllers
             {
                 order.Created = DateTime.Now;
                 order.Updated = DateTime.Now;
-                order.CreatedBy = User.Identity.Name;
-                order.UpdatedBy = User.Identity.Name;
+                order.CreatedBy = "Anonymous";//User.Identity.Name;
+                order.UpdatedBy = "Anonymous";//User.Identity.Name;
                 _context.Add(order);
                 await _context.SaveChangesAsync();
+
+                AddStatusNotification(order);
 
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Details", "Orders", new { id = order.Id });
@@ -84,6 +88,7 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: Orders/Edit/5
+        [CustomAuthorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -105,6 +110,7 @@ namespace BPUIO_OneForEachOther.Controllers
         // POST: Orders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [CustomAuthorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,BoroughId,FirstName,LastName,Email,Address,Phone,DeliveryDate,PaymentType,Note,Lat,Lng,GdprConsent,GdprConsentDate,Status,Created,CreatedBy,Updated,UpdatedBy")] Order order)
@@ -143,6 +149,7 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: Orders/Delete/5
+        [CustomAuthorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -162,11 +169,19 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // POST: Orders/Delete/5
+        [CustomAuthorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var order = await _context.Orders.FindAsync(id);
+
+            if (_context.OrderDetails.Any(e => e.OrderId == id))
+            {
+                ModelState.AddModelError("", "Order contains items. Please delete them first.");
+                return View(order);
+            }
+
             _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -174,6 +189,7 @@ namespace BPUIO_OneForEachOther.Controllers
 
 
         // GET: Orders/ChangeStatus/5
+        [CustomAuthorize]
         public async Task<IActionResult> ChangeStatus(int? id, string status, string username = null)
         {
             if (id == null)
@@ -209,6 +225,8 @@ namespace BPUIO_OneForEachOther.Controllers
 
                     order.Status = status;
                     await _context.SaveChangesAsync();
+
+                    AddStatusNotification(order);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -239,6 +257,71 @@ namespace BPUIO_OneForEachOther.Controllers
             var order = _context.Users.FirstOrDefault(e => e.Username.ToLower() == username.ToLower());
 
             return order.Id;
+        }
+
+        public string GetStatusColor (string status)
+        {
+            string color = "";
+            if (status == "Worksheet")
+            {
+                color = "info";
+            }
+            else if (status == "In progress")
+            {
+                color = "warning";
+            }
+            else if (status == "Finished")
+            {
+                color = "success";
+            }
+            else if (status == "Canceled")
+            {
+                color = "secondary";
+            }
+
+            return color;
+        }
+
+        private void AddStatusNotification (Order order)
+        {
+            UserNotification userNotification = new UserNotification();
+            int? userId = GetUserId(@User.Identity.Name);
+            if (userId == null)
+            {
+                userId = 1;
+            }
+
+            if (order.Status == "Worksheet")
+            {
+                userNotification.Subject = string.Format("Order no. {0} created", order.Id);
+                userNotification.Text = string.Format("Order created.<br><br>nOrder number: {0}<brName: {1} {2}<br>Address: {3}<br>Phone: {4}<br>Email: {5}<br>Delivery date: {6}<br>Paymend: {7}<br>Note: {8}", 
+                order.Id, order.FirstName, order.LastName, order.Address, order.Phone, order.Email, order.DeliveryDate.ToString("dd.MM.yyyy"), order.PaymentType, order.Note);
+            }
+            else if (order.Status == "In progress")
+            {
+                userNotification.Subject = string.Format("Order no.{0} in progress", order.Id);
+                userNotification.Text = string.Format("Order {0} is in progress.<br>Assigned to user {1}.", order.Id, order.User.FullName);
+            }
+            else if (order.Status == "Finished")
+            {
+                userNotification.Subject = string.Format("Order no. {0} finished", order.Id);
+                userNotification.Text= string.Format("Order {0} is finished.<br>Assigned to user {1}.", order.Id, order.User.FullName);
+            }
+            else if (order.Status == "Canceled")
+            {
+                userNotification.Subject = string.Format("Order no. {0} canceled", order.Id);
+                userNotification.Text = string.Format("Order {0} is canceled.<br>Assigned to user {1}.", order.Id, order.User.FullName);
+            }
+
+            userNotification.UserId = (int)userId;
+            userNotification.Created = DateTime.Now;
+            userNotification.Updated = DateTime.Now;
+            userNotification.CreatedBy = User.Identity.Name;
+            userNotification.UpdatedBy = User.Identity.Name;
+            userNotification.Status= "Active";
+            _context.Add(userNotification);
+            _context.SaveChanges();
+
         }
     }
 }

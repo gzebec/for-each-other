@@ -49,10 +49,10 @@ namespace BPUIO_OneForEachOther.Controllers
         }
 
         // GET: UserBoroughs/Create
-        public IActionResult Create()
+        public IActionResult Create(int? userId)
         {
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name");
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName");
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userId);
             ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text");
             return View();
         }
@@ -96,6 +96,7 @@ namespace BPUIO_OneForEachOther.Controllers
             }
             ViewData["BoroughId"] = new SelectList(_context.Boroughs, "Id", "Name", userBorough.BoroughId);
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "FullName", userBorough.UserId);
+
             ViewData["Status"] = new SelectList(Utils.Extensions.GetRecordStatusList(), "Value", "Text", userBorough.Status);
             return View(userBorough);
         }

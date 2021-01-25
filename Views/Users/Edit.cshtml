@@ -4,68 +4,82 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
-
-<h4>User</h4>
+<h1>
+    @Html.DisplayFor(model => model.FullName) (@Html.DisplayFor(model => model.Username))
+</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-8">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="Lat" />
             <input type="hidden" asp-for="Lng" />
-            <div class="form-group">
-                <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" readonly />
-                <span asp-validation-for="Username" class="text-danger"></span>
+            <input type="hidden" asp-for="Password" class="form-control" />
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" readonly />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="hidden" asp-for="Password" class="form-control" />
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" />
-                <span asp-validation-for="FirstName" class="text-danger"></span>
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="Address" class="control-label"></label>
+                    <input asp-for="Address" class="form-control" /> <a href="javascript:getLocation()"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" />
-                <span asp-validation-for="LastName" class="text-danger"></span>
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="CountryId" class="control-label"></label>
+                    <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
+                    <span asp-validation-for="CountryId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="col">
+                    <label asp-for="Phone" class="control-label"></label>
+                    <input asp-for="Phone" class="form-control" />
+                    <span asp-validation-for="Phone" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
-                <input asp-for="Address" class="form-control" /> <a href="javascript:getLocation()"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                <span asp-validation-for="Address" class="text-danger"></span>
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="AuthenticationSchemeId" class="control-label"></label>
+                    <select asp-for="AuthenticationSchemeId" class="form-control" asp-items="ViewBag.AuthenticationSchemeId"></select>
+                    <span asp-validation-for="AuthenticationSchemeId" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Phone" class="control-label"></label>
-                <input asp-for="Phone" class="form-control" />
-                <span asp-validation-for="Phone" class="text-danger"></span>
+            <div class="row form-group">
+                <div class="col">
+                    <label asp-for="Status" class="control-label"></label>
+                    <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <select asp-for="CountryId" class="form-control" asp-items="ViewBag.CountryId"></select>
-                <span asp-validation-for="CountryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AuthenticationSchemeId" class="control-label"></label>
-                <select asp-for="AuthenticationSchemeId" class="form-control" asp-items="ViewBag.AuthenticationSchemeId"></select>
-                <span asp-validation-for="AuthenticationSchemeId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <select asp-for="Status" class="form-control" asp-items="ViewBag.Status"></select>
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <a class="btn btn-outline-info" asp-action="Index">Cancel</a>
+            <div class="row form-group">
+                <div class="col">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a class="btn btn-outline-info" asp-action="Index">Cancel</a>
+                </div>
             </div>
         </form>
     </div>

@@ -12,14 +12,14 @@
     <div class="col-md-10">
         <form asp-action="Register">
             <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
-            <div class="row">
+            <div class="row form-group">
                 <div class="col">
                     <label asp-for="Username" class="control-label"></label>
                     <input asp-for="Username" class="form-control" />
                     <span asp-validation-for="Username" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
                 <div class="col">
                     <label asp-for="Password" class="control-label"></label>
                     <input type="password" asp-for="Password" class="form-control" required />
@@ -31,7 +31,7 @@
                     <span asp-validation-for="PasswordRepeat" class="text-danger"></span>
                 </div>
             </div>
-            <div class="row">
+            <div class="row form-group">
                 <div class="col">
                     <label asp-for="FirstName" class="control-label"></label>
                     <input asp-for="FirstName" class="form-control" />
